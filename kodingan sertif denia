@@ -1,0 +1,96 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct Motor {
+    string idMotor;
+    string namaMotor;
+    int hargaSewa;
+    bool tersedia;
+};
+
+int main() {
+    Motor motor[5] = {
+        {"M001", "Honda Vario", 80000, true},
+        {"M002", "Yamaha NMAX", 120000, true},
+        {"M003", "Honda PCX", 130000, true},
+        {"M004", "Yamaha Aerox", 110000, true},
+        {"M005", "Suzuki Nex", 70000, true}
+    };
+
+    int pilihan;
+    string id;
+
+    do {
+        cout << "\n=== SISTEM RENTAL MOTOR ===\n";
+        cout << "1. Lihat Daftar Motor\n";
+        cout << "2. Sewa Motor\n";
+        cout << "3. Kembalikan Motor\n";
+        cout << "4. Keluar\n";
+        cout << "Pilih menu: ";
+        cin >> pilihan;
+
+        if (pilihan == 1) {
+            cout << "\nDaftar Motor:\n";
+            cout << "ID\tNama Motor\tHarga\tStatus\n";
+            for (int i = 0; i < 5; i++) {
+                cout << motor[i].idMotor << "\t"
+                     << motor[i].namaMotor << "\t"
+                     << motor[i].hargaSewa << "\t";
+
+                if (motor[i].tersedia)
+                    cout << "Tersedia\n";
+                else
+                    cout << "Disewa\n";
+            }
+        }
+
+        else if (pilihan == 2) {
+            cout << "Masukkan ID Motor yang ingin disewa: ";
+            cin >> id;
+
+            bool ditemukan = false;
+
+            for (int i = 0; i < 5; i++) {
+                if (motor[i].idMotor == id) {
+                    ditemukan = true;
+
+                    if (motor[i].tersedia) {
+                        motor[i].tersedia = false;
+                        cout << "Motor berhasil disewa.\n";
+                    } else {
+                        cout << "Motor sedang disewa.\n";
+                    }
+                }
+            }
+
+            if (!ditemukan) {
+                cout << "ID Motor tidak ditemukan.\n";
+            }
+        }
+
+        else if (pilihan == 3) {
+            cout << "Masukkan ID Motor yang dikembalikan: ";
+            cin >> id;
+
+            bool ditemukan = false;
+
+            for (int i = 0; i < 5; i++) {
+                if (motor[i].idMotor == id) {
+                    ditemukan = true;
+                    motor[i].tersedia = true;
+                    cout << "Motor berhasil dikembalikan.\n";
+                }
+            }
+
+            if (!ditemukan) {
+                cout << "ID Motor tidak ditemukan.\n";
+            }
+        }
+
+    } while (pilihan != 4);
+
+    cout << "Terima kasih telah menggunakan sistem rental motor.\n";
+
+    return 0;
+}
